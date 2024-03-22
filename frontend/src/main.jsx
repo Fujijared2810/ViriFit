@@ -1,45 +1,45 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-import { ChakraProvider, ColorModeScript, extendTheme} from '@chakra-ui/react';
-import { mode } from '@chakra-ui/theme-tools'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { ChakraProvider, ColorModeScript, extendTheme } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
 import { BrowserRouter } from "react-router-dom";
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot } from "recoil";
 
 const styles = {
-  global:(props) => ({
+  global: (props) => ({
     body: {
-      color:mode('gray.800', 'whiteAlpha.900')(props),
-      bg:mode('gray.100', '#101010')(props)
-    }
-  })
+      color: mode("gray.800", "whiteAlpha.900")(props),
+      bg: mode("gray.100", "#101010")(props),
+    },
+  }),
 };
 
 const config = {
   initialColorMode: "dark",
-  useSystemColorMode: true
+  useSystemColorMode: true,
 };
 
 const colors = {
   gray: {
     light: "#616161",
-    dark: "#1e1e1e"
-  }
+    dark: "#1e1e1e",
+  },
 };
 
 const theme = extendTheme({ config, styles, colors });
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
+  // the react.strictmode renders every components twice lol
   <React.StrictMode>
     <RecoilRoot>
       <BrowserRouter>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <ChakraProvider theme={theme}>
           <App />
-
         </ChakraProvider>
       </BrowserRouter>
     </RecoilRoot>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
