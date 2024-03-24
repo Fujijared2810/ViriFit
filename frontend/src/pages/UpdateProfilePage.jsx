@@ -10,9 +10,9 @@ import {
   Avatar,
   Center,
 } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
-import { useRef, useState } from "react";
 import usePreviewImg from "../hooks/usePreviewImg";
 import useShowToast from "../hooks/useShowToast";
 
@@ -27,9 +27,11 @@ export default function UpdateProfilePage() {
   });
   const fileRef = useRef(null);
   const [updating, setUpdating] = useState(false);
+
   const showToast = useShowToast();
 
   const { handleImageChange, imgUrl } = usePreviewImg();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (updating) return;
@@ -47,7 +49,7 @@ export default function UpdateProfilePage() {
         showToast("Error", data.error, "error");
         return;
       }
-      showToast("Success", "Profile has been updated successfully.", "success");
+      showToast("Success", "Profile updated successfully", "success");
       setUser(data);
       localStorage.setItem("user-threads", JSON.stringify(data));
     } catch (error) {
@@ -58,7 +60,7 @@ export default function UpdateProfilePage() {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <Flex align={"center"} justify={"center"}>
+      <Flex align={"center"} justify={"center"} my={6}>
         <Stack
           spacing={4}
           w={"full"}
@@ -67,12 +69,11 @@ export default function UpdateProfilePage() {
           rounded={"xl"}
           boxShadow={"lg"}
           p={6}
-          my={6}
         >
           <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
             User Profile Edit
           </Heading>
-          <FormControl>
+          <FormControl id="userName">
             <Stack direction={["column", "row"]} spacing={6}>
               <Center>
                 <Avatar
@@ -98,54 +99,54 @@ export default function UpdateProfilePage() {
             <FormLabel>Full name</FormLabel>
             <Input
               placeholder="John Doe"
-              _placeholder={{ color: "gray.500" }}
-              type="text"
               value={inputs.name}
               onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
+              _placeholder={{ color: "gray.500" }}
+              type="text"
             />
           </FormControl>
           <FormControl>
-            <FormLabel>Username</FormLabel>
+            <FormLabel>User name</FormLabel>
             <Input
               placeholder="johndoe"
-              _placeholder={{ color: "gray.500" }}
-              type="text"
               value={inputs.username}
               onChange={(e) =>
                 setInputs({ ...inputs, username: e.target.value })
               }
+              _placeholder={{ color: "gray.500" }}
+              type="text"
             />
           </FormControl>
           <FormControl>
             <FormLabel>Email address</FormLabel>
             <Input
               placeholder="your-email@example.com"
-              _placeholder={{ color: "gray.500" }}
-              type="email"
               value={inputs.email}
               onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              _placeholder={{ color: "gray.500" }}
+              type="email"
             />
           </FormControl>
           <FormControl>
             <FormLabel>Bio</FormLabel>
             <Input
-              placeholder="Bio"
-              _placeholder={{ color: "gray.500" }}
-              type="text"
+              placeholder="Your bio."
               value={inputs.bio}
               onChange={(e) => setInputs({ ...inputs, bio: e.target.value })}
+              _placeholder={{ color: "gray.500" }}
+              type="text"
             />
           </FormControl>
           <FormControl>
             <FormLabel>Password</FormLabel>
             <Input
               placeholder="password"
-              _placeholder={{ color: "gray.500" }}
-              type="password"
               value={inputs.password}
               onChange={(e) =>
                 setInputs({ ...inputs, password: e.target.value })
               }
+              _placeholder={{ color: "gray.500" }}
+              type="password"
             />
           </FormControl>
           <Stack spacing={6} direction={["column", "row"]}>
