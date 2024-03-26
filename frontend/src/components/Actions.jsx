@@ -127,6 +127,7 @@ const Actions = ({ post }) => {
           viewBox="0 0 24 22"
           width="20"
           onClick={handleLikeAndUnlike}
+          cursor={"pointer"}
         >
           <title>Like</title>
           <path
@@ -145,6 +146,7 @@ const Actions = ({ post }) => {
           viewBox="0 0 24 24"
           width="20"
           onClick={onOpen}
+          cursor={"pointer"}
         >
           <title>Comment</title>
           <path

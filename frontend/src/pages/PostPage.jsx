@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Divider,
   Flex,
   Image,
@@ -129,12 +128,11 @@ const PostPage = () => {
 
       <Flex justifyContent={"space-between"}>
         <Flex gap={2} alignItems={"center"}>
-          <Text fontSize={"2xl"}>👋</Text>
+          <Text fontSize={"2xl"}>⭐️</Text>
           <Text color={"gray.light"}>
-            Create your account to like, reply and post.
+            Did you liked this post? Give it a star! :D
           </Text>
         </Flex>
-        <Button>Create</Button>
       </Flex>
 
       <Divider my={4} />
