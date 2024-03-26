@@ -17,6 +17,7 @@ const UserPage = () => {
 
   useEffect(() => {
     const getPosts = async () => {
+      if (!user) return;
       setFetchingPosts(true);
       try {
         const res = await fetch(`/api/posts/user/${username}`);
@@ -32,8 +33,7 @@ const UserPage = () => {
     };
 
     getPosts();
-  }, [username, showToast, setPosts]);
-  console.log("Post is here and it is recoil state ", posts);
+  }, [username, showToast, setPosts, user]);
   if (!user && loading) {
     return (
       <Flex justifyContent={"center"}>
@@ -41,7 +41,12 @@ const UserPage = () => {
       </Flex>
     );
   }
-  if (!user && !loading) return <h1>User not Found.</h1>;
+  if (!user && !loading)
+    return (
+      <h1 style={{ textAlign: "center", fontWeight: "bold" }}>
+        User not Found.
+      </h1>
+    );
 
   return (
     <>
