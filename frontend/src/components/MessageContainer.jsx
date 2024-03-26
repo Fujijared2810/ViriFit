@@ -19,6 +19,7 @@ import {
 } from "../atoms/messagesAtom";
 import userAtom from "../atoms/userAtom";
 import { useSocket } from "../context/SocketContext";
+import messageSound from "../assets/sounds/message.mp3";
 
 const MessageContainer = () => {
   const showToast = useShowToast();
@@ -36,6 +37,10 @@ const MessageContainer = () => {
         setMessages((prev) => [...prev, message]);
       }
 
+      if (!document.hasFocus()) {
+        const sound = new Audio(messageSound);
+        sound.play();
+      }
       setConversations((prev) => {
         const updatedConversations = prev.map((conversation) => {
           if (conversation._id === message.conversationId) {
@@ -56,32 +61,34 @@ const MessageContainer = () => {
   }, [socket, selectedConversation, setConversations]);
 
   useEffect(() => {
-    const lastMessageIsFromOtherUser = messages.length && messages[messages.length - 1].sender !== currentUser._id;
-    
-    if(lastMessageIsFromOtherUser) {
+    const lastMessageIsFromOtherUser =
+      messages.length &&
+      messages[messages.length - 1].sender !== currentUser._id;
+
+    if (lastMessageIsFromOtherUser) {
       socket.emit("markMessagesAsSeen", {
         conversationId: selectedConversation._id,
         userId: selectedConversation.userId,
-      })
+      });
     }
 
     socket.on("messagesSeen", ({ conversationId }) => {
       if (selectedConversation._id === conversationId) {
         setMessages((prev) => {
-          const updatedMessages = prev.map(message => {
-            if(!message.seen) {
+          const updatedMessages = prev.map((message) => {
+            if (!message.seen) {
               return {
                 ...message,
-                seen: true
-              }
+                seen: true,
+              };
             }
-            return message
-          })
-          return updatedMessages
-        })
+            return message;
+          });
+          return updatedMessages;
+        });
       }
-    })
-  }, [socket, currentUser._id, messages, selectedConversation])
+    });
+  }, [socket, currentUser._id, messages, selectedConversation]);
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
