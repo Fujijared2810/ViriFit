@@ -11,9 +11,9 @@ import {
   Portal,
   Text,
   VStack,
+  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
@@ -47,12 +47,12 @@ const UserHeader = ({ user }) => {
             <Text fontSize={"sm"}>{user.username}</Text>
             <Text
               fontSize={"xs"}
-              bg={"gray.dark"}
-              color={"gray.light"}
+              bg={useColorModeValue("gray.white", "gray.dark")}
+              color={useColorModeValue("gray.dark", "gray.white")}
               p={1}
               borderRadius={"full"}
             >
-              FitTogether.net
+              ViriFit User
             </Text>
           </Flex>
         </Box>
@@ -96,12 +96,9 @@ const UserHeader = ({ user }) => {
         <Flex gap={2} alignItems={"center"}>
           <Text color={"gray.light"}>{user.followers.length} follower</Text>
           <Box w="1" h="1" bg={"gray.light"} borderRadius={"full"}></Box>
-          <Link color={"gray.light"}>Instagram.com</Link>
+          <Link color={"gray.light"}>Virifit</Link>
         </Flex>
         <Flex>
-          <Box className="icon-container">
-            <BsInstagram size={24} cursor={"pointer"} />
-          </Box>
           <Box className="icon-container">
             <Menu>
               <MenuButton>
@@ -128,16 +125,6 @@ const UserHeader = ({ user }) => {
           cursor={"pointer"}
         >
           <Text fontWeight={"bold"}> Threads</Text>
-        </Flex>
-        <Flex
-          flex={1}
-          borderBottom={"1px solid gray"}
-          justifyContent={"center"}
-          color={"gray.light"}
-          pb="3"
-          cursor={"pointer"}
-        >
-          <Text fontWeight={"bold"}> Replies</Text>
         </Flex>
       </Flex>
     </VStack>

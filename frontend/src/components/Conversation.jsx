@@ -24,7 +24,6 @@ const Conversations = ({ conversation, isOnline }) => {
   );
   const colorMode = useColorMode();
 
-  console.log("selectedConversation", selectedConversation);
   return (
     <Flex
       gap={4}
@@ -32,8 +31,8 @@ const Conversations = ({ conversation, isOnline }) => {
       p={1}
       _hover={{
         cursor: "pointer",
-        bg: useColorModeValue("gray.600", "gray.dark"),
-        color: "white",
+        bg: useColorModeValue("gray.200", "gray.dark"),
+        color: useColorModeValue("gray.800", "white"),
       }}
       onClick={() =>
         setSelectedConversation({
