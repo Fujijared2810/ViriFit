@@ -18,19 +18,13 @@ import { CgMoreO } from "react-icons/cg";
 import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
-import useShowToast from "../hooks/useShowToast";
+import useFollowUnFollow from "../hooks/useFollowUnFollow.js";
 
 const UserHeader = ({ user }) => {
   const toast = useToast();
-  const showToast = useShowToast();
 
   const currentUser = useRecoilValue(userAtom); //logged in user
-  const [following, setFollowing] = useState(
-    user.followers.includes(currentUser?._id)
-  );
-  const [updating, setUpdating] = useState(false);
-
+  const { handleFollowUnFollow, following, updating } = useFollowUnFollow(user);
   const copyURL = () => {
     const currentURL = window.location.href;
     navigator.clipboard.writeText(currentURL).then(() => {
@@ -40,42 +34,6 @@ const UserHeader = ({ user }) => {
         isClosable: true,
       });
     });
-  };
-
-  const handleFollowUnFollow = async () => {
-    if (!currentUser) {
-      showToast("Error", "You must be logged in to follow/unfollow.", "error");
-      return;
-    }
-    if (updating) return;
-    setUpdating(true);
-    try {
-      const res = await fetch(`/api/users/follow/${user._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      if (data.error) {
-        showToast("Error", data.error, "error");
-        return;
-      }
-      if (following) {
-        showToast("Success", `UnFollowed ${user.name}`, "success");
-        user.followers.pop(); // simulate removing followers
-      } else {
-        showToast("Success", `Followed ${user.name}`, "success");
-        user.followers.push(currentUser?._id); // simulate adding to the followers
-      }
-      setFollowing(!following);
-
-      console.log(data);
-    } catch (error) {
-      showToast("Error", error, "error");
-    } finally {
-      setUpdating(false);
-    }
   };
 
   return (
