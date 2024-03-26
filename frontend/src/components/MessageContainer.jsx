@@ -12,7 +12,7 @@ import Message from "./Message";
 import MessageInput from "./MessageInput";
 import { useEffect, useRef, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   conversationsAtom,
   selectedConversationAtom,
@@ -29,7 +29,7 @@ const MessageContainer = () => {
   const [messages, setMessages] = useState([]);
   const currentUser = useRecoilValue(userAtom);
   const { socket } = useSocket();
-  const setConversations = useRecoilState(conversationsAtom);
+  const setConversations = useSetRecoilState(conversationsAtom);
   const messageEndRef = useRef(null);
 
   useEffect(() => {
