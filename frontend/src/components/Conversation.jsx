@@ -24,6 +24,10 @@ const Conversations = ({ conversation, isOnline }) => {
   );
   const colorMode = useColorMode();
 
+  const selectedBgColor = useColorModeValue("gray.200", "gray.600");
+  // const selectedTextColor = useColorModeValue("gray.800", "white");
+  
+
   return (
     <Flex
       gap={4}
@@ -45,9 +49,7 @@ const Conversations = ({ conversation, isOnline }) => {
       }
       bg={
         selectedConversation?._id === conversation._id
-          ? colorMode === "light"
-            ? "gray.600"
-            : "gray.dark"
+          ? selectedBgColor
           : ""
       }
       borderRadius={"md"}
