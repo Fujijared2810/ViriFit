@@ -26,6 +26,9 @@ const PostPage = () => {
   const currentUser = useRecoilValue(userAtom);
   const [posts, setPosts] = useRecoilState(postsAtom);
   const navigate = useNavigate();
+  const navigateToUserProfile = (username) => {
+    navigate(`/${username}`); // Replace with your user profile route
+  };
 
   const currentPost = posts[0];
 
@@ -79,7 +82,13 @@ const PostPage = () => {
     <>
       <Flex>
         <Flex w={"full"} alignItems={"center"} gap={3}>
-          <Avatar src={user.profilePic} size={"md"} name="Jared Mesa" />
+          <Avatar
+            src={user.profilePic}
+            size={"md"}
+            name="Jared Mesa"
+            onClick={() => navigateToUserProfile(user.username)}
+            cursor={"pointer"}
+          />
           <Flex>
             <Text fontSize={"sm"} fontWeight={"bold"}>
               {user.username}

@@ -38,8 +38,6 @@ const useFollowUnFollow = (user) => {
         user.followers.push(currentUser?._id); // simulate adding to the followers
       }
       setFollowing(!following);
-
-      console.log(data);
     } catch (error) {
       showToast("Error", error, "error");
     } finally {

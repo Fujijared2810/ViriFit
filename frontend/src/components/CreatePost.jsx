@@ -118,7 +118,7 @@ const CreatePost = () => {
                 fontWeight="semibold"
                 textAlign={"right"}
                 m={"1"}
-                color={"gray.800"}
+                color={"white"}
               >
                 {remainingChar}/{MAX_CHAR}
               </Text>
