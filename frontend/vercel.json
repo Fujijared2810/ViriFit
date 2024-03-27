@@ -1,3 +1,17 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "version": 2,
+  "builds": [{ "src": "backend/server.js", "use": "@vercel/node" }],
+  "routes": [
+    { "src": "/api/.*", "dest": "backend/server.js" },
+    { "src": "/(.*)", "dest": "frontend/dist/$1" }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "MONGO_URI": "mongodb+srv://mesajared6:ojOFaEJB4fXhIja1@cluster0.i2oks7r.mongodb.net/threads?retryWrites=true&w=majority&appName=Cluster0",
+    "JWT_SECRET": "jwtSecret",
+    "PORT": 5001,
+    "CLOUDINARY_CLOUD_NAME": "dtvj6hxlm",
+    "CLOUDINARY_API_KEY": "334268868989683",
+    "CLOUDINARY_API_KEY_SECRET": "wv7ZwVKLP3pKONQ0WRtG9HCmuzw"
+  }
 }
