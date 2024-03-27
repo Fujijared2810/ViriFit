@@ -18,7 +18,6 @@ const HomePage = () => {
       try {
         const res = await fetch("/api/posts/feed");
         const data = await res.json();
-        console.log(data);
         if (data.error) {
           showToast("Error", data.error, "error");
           return;
