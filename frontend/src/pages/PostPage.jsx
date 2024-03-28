@@ -6,6 +6,7 @@ import {
   Image,
   Spinner,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import Actions from "../components/Actions";
 import { useEffect } from "react";
@@ -29,6 +30,9 @@ const PostPage = () => {
   const navigateToUserProfile = (username) => {
     navigate(`/${username}`); // Replace with your user profile route
   };
+
+  const { colorMode } = useColorMode();
+  const dividerColor = colorMode === "dark" ? "gray.700" : "gray.700";
 
   const currentPost = posts[0];
 
@@ -133,18 +137,18 @@ const PostPage = () => {
         <Actions post={currentPost} />
       </Flex>
 
-      <Divider my={4} />
+      <Divider my={4} borderColor={dividerColor} />
 
       <Flex justifyContent={"space-between"}>
         <Flex gap={2} alignItems={"center"}>
           <Text fontSize={"2xl"}>⭐️</Text>
           <Text color={"gray.light"}>
-            Did you liked this post? Give it a star! :D
+            Did you liked this post? Give it a Support! :D
           </Text>
         </Flex>
       </Flex>
 
-      <Divider my={4} />
+      <Divider my={4} borderColor={dividerColor} />
       {currentPost.replies.map((reply) => (
         <Comment
           key={reply._id}

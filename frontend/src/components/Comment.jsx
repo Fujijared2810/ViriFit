@@ -1,8 +1,11 @@
-import { Avatar, Divider, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Divider, Flex, Text, useColorMode } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Comment = ({ reply, lastReply }) => {
   const navigate = useNavigate();
+
+  const { colorMode } = useColorMode();
+  const dividerColor = colorMode === "dark" ? "gray.700" : "gray.700";
 
   const navigateToUserProfile = (username) => {
     navigate(`/${username}`); // Replace with your user profile route
@@ -29,7 +32,7 @@ const Comment = ({ reply, lastReply }) => {
           <Text>{reply.text}</Text>
         </Flex>
       </Flex>
-      {!lastReply ? <Divider /> : null}
+      {!lastReply ? <Divider borderColor={dividerColor} /> : null}
     </>
   );
 };

@@ -74,7 +74,7 @@ const Post = ({ post, postedBy }) => {
             {post.replies[0] && (
               <Avatar
                 size="xs"
-                name="John Doe"
+                name={user.name}
                 src={post.replies[0].userProfilePic}
                 pos={"absolute"}
                 top={"0px"}
@@ -85,7 +85,7 @@ const Post = ({ post, postedBy }) => {
             {post.replies[1] && (
               <Avatar
                 size="xs"
-                name="John Doe"
+                name={user.name}
                 src={post.replies[1].userProfilePic}
                 pos={"absolute"}
                 bottom={"0px"}
@@ -96,7 +96,7 @@ const Post = ({ post, postedBy }) => {
             {post.replies[2] && (
               <Avatar
                 size="xs"
-                name="John Doe"
+                name={user.name}
                 src={post.replies[2].userProfilePic}
                 pos={"absolute"}
                 bottom={"0px"}

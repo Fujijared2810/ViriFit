@@ -161,11 +161,11 @@ const Actions = ({ post }) => {
 
       <Flex gap={2} alignItems={"center"}>
         <Text color={"gray.light"} fontSize={"sm"}>
-          {post.replies.length} replies
+          {post.replies.length} Replies
         </Text>
         <Box w={0.5} h={0.5} borderRadius={"full"} bg={"gray.light"}></Box>
         <Text color={"gray.light"} fontSize={"sm"}>
-          {post.likes.length} likes
+          {post.likes.length} Supports
         </Text>
       </Flex>
 
