@@ -9,6 +9,8 @@ import {
   Grid,
   GridItem,
   useColorModeValue,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
 import {
   format,
@@ -21,6 +23,7 @@ import {
 const JournalPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [journalEntry, setJournalEntry] = useState("");
+  const [savedEntries, setSavedEntries] = useState({});
 
   const handleDateChange = (day) => {
     setSelectedDate(day);
@@ -32,9 +35,15 @@ const JournalPage = () => {
 
   const handleSubmit = () => {
     // Save the journal entry for the selected date
-    console.log(
-      `Journal entry for ${format(selectedDate, "yyyy-MM-dd")}: ${journalEntry}`
-    );
+    const formattedDate = format(selectedDate, "yyyy-MM-dd");
+    const formattedTime = format(new Date(), "h:mm a");
+    setSavedEntries((prevEntries) => ({
+      ...prevEntries,
+      [formattedDate]: {
+        entry: journalEntry,
+        time: formattedTime,
+      },
+    }));
     setJournalEntry("");
   };
 
@@ -93,7 +102,7 @@ const JournalPage = () => {
       </Grid>
       <Box mt={6}>
         <Input
-          placeholder="Enter your journal entry"
+          placeholder="Enter your workout log entry"
           value={journalEntry}
           onChange={handleJournalEntryChange}
           mb={4}
@@ -106,6 +115,23 @@ const JournalPage = () => {
         >
           Save
         </Button>
+        {savedEntries[format(selectedDate, "yyyy-MM-dd")] && (
+          <Box mt={6}>
+            <Heading size="md" mb={2}>
+              Saved Entries
+            </Heading>
+            <List spacing={2}>
+              <ListItem>
+                <Text fontWeight="bold">
+                  {savedEntries[format(selectedDate, "yyyy-MM-dd")].time}
+                </Text>
+                <Text>
+                  {savedEntries[format(selectedDate, "yyyy-MM-dd")].entry}
+                </Text>
+              </ListItem>
+            </List>
+          </Box>
+        )}
       </Box>
     </Box>
   );
