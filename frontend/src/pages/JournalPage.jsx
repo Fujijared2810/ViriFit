@@ -2,158 +2,109 @@ import { useState } from "react";
 import {
   Box,
   Flex,
-  Grid,
-  GridItem,
-  IconButton,
-  Text,
-  useColorModeValue,
+  Heading,
   Input,
   Button,
+  Text,
+  Grid,
+  GridItem,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import {
+  format,
+  addDays,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
+} from "date-fns";
 
 const JournalPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const textColor = useColorModeValue("black", "white"); // Get text color based on theme mode
+  const [journalEntry, setJournalEntry] = useState("");
 
-  const handlePrevMonth = () => {
-    const prevMonth = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth() - 1,
-      1
+  const handleDateChange = (day) => {
+    setSelectedDate(day);
+  };
+
+  const handleJournalEntryChange = (event) => {
+    setJournalEntry(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Save the journal entry for the selected date
+    console.log(
+      `Journal entry for ${format(selectedDate, "yyyy-MM-dd")}: ${journalEntry}`
     );
-    setSelectedDate(prevMonth);
+    setJournalEntry("");
   };
 
-  const handleNextMonth = () => {
-    const nextMonth = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth() + 1,
-      1
-    );
-    setSelectedDate(nextMonth);
-  };
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const startDate = startOfWeek(selectedDate);
+  const endDate = endOfWeek(selectedDate);
+  const days = eachDayOfInterval({ start: startDate, end: endDate });
 
-  const daysInMonth = (date) => {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-  };
-
-  const getWeekdayName = (date) => {
-    const options = { weekday: "short" };
-    return new Intl.DateTimeFormat("en-US", options).format(date);
-  };
-
-  const getDateString = (date) => {
-    return `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-  };
-
-  const renderCalendar = () => {
-    if (!selectedDate) return []; // Return empty array if selectedDate is null
-
-    const firstDayOfMonth = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      1
-    );
-    const startingDayOfWeek = firstDayOfMonth.getDay(); // 0 for Sunday, 1 for Monday, etc.
-    const daysInCurrentMonth = daysInMonth(selectedDate);
-    const today = new Date();
-
-    let days = [];
-    let dayCounter = 1;
-
-    // Render empty grid cells for days before the start of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(<GridItem key={`empty-${i}`} />);
-    }
-
-    // Render grid cells for each day of the month
-    for (let i = 1; i <= daysInCurrentMonth; i++) {
-      const currentDate = new Date(
-        selectedDate.getFullYear(),
-        selectedDate.getMonth(),
-        i
-      );
-      const dateString = getDateString(currentDate);
-      const isToday = currentDate.toDateString() === today.toDateString();
-
-      days.push(
-        <GridItem key={dateString} textAlign="center" p={2}>
-          <IconButton
-            aria-label={`Select ${dateString}`}
-            icon={
-              <Text fontSize="sm" color={isToday ? textColor : "inherit"}>
-                {i}
-              </Text> // Use textColor variable
-            }
-            bg={isToday ? "blue.500" : "transparent"}
-            borderRadius="full"
-            onClick={() => handleDateClick(currentDate)}
-          />
-        </GridItem>
-      );
-      dayCounter++;
-    }
-
-    return days;
-  };
-
-  const handleDateClick = (date) => {
-    // Implement logic to fetch workout logs for the selected date and display them
-    console.log(`Fetching workout logs for ${date}`);
-  };
+  const calendarBgColor = useColorModeValue("gray.100", "gray.800");
+  const selectedDateBgColor = useColorModeValue("gray.200", "gray.700");
+  const hoveredDateBgColor = useColorModeValue("gray.300", "gray.600");
+  const dayTextColor = useColorModeValue("gray.700", "gray.300");
 
   return (
-    <Box p={4}>
-      <Flex align="center" justify="space-between" mb={4}>
-        <IconButton
-          aria-label="Previous month"
-          icon={<ChevronLeftIcon />}
-          onClick={handlePrevMonth}
-        />
-        <Text fontSize="lg">
-          {selectedDate.toLocaleString("default", {
-            month: "long",
-            year: "numeric",
-          })}
-        </Text>
-        <IconButton
-          aria-label="Next month"
-          icon={<ChevronRightIcon />}
-          onClick={handleNextMonth}
-        />
+    <Box p={8}>
+      <Heading mb={6}>Workout Log</Heading>
+      <Flex justify="space-between" align="center" mb={6}>
+        <Button onClick={() => handleDateChange(addDays(selectedDate, -7))}>
+          Previous Week
+        </Button>
+        <Text>{format(selectedDate, "MMM yyyy")}</Text>
+        <Button onClick={() => handleDateChange(addDays(selectedDate, 7))}>
+          Next Week
+        </Button>
       </Flex>
-      <Grid templateColumns="repeat(7, 1fr)" gap={2}>
-        <GridItem textAlign="center" p={2}>
-          Sun
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Mon
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Tue
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Wed
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Thu
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Fri
-        </GridItem>
-        <GridItem textAlign="center" p={2}>
-          Sat
-        </GridItem>
-        {renderCalendar()}
+      <Grid templateColumns="repeat(7, 1fr)" gap={4}>
+        {weekDays.map((day) => (
+          <GridItem key={day} textAlign="center">
+            <Text fontWeight="bold" color={dayTextColor}>
+              {day}
+            </Text>
+          </GridItem>
+        ))}
+        {days.map((day) => (
+          <GridItem
+            key={format(day, "yyyy-MM-dd")}
+            bg={
+              format(day, "yyyy-MM-dd") === format(selectedDate, "yyyy-MM-dd")
+                ? selectedDateBgColor
+                : format(day, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")
+                ? hoveredDateBgColor
+                : calendarBgColor
+            }
+            _hover={{
+              bg: hoveredDateBgColor,
+            }}
+            borderRadius={4}
+            p={2}
+            cursor="pointer"
+            onClick={() => handleDateChange(day)}
+            color={dayTextColor}
+          >
+            <Text>{format(day, "d")}</Text>
+          </GridItem>
+        ))}
       </Grid>
-      <Box mt={4}>
-        <Text fontSize="xl">Add Workout Log</Text>
-        <Input placeholder="Enter workout details" mt={2} />
-        <Button colorScheme="blue" mt={2}>
-          Add Log
+      <Box mt={6}>
+        <Input
+          placeholder="Enter your journal entry"
+          value={journalEntry}
+          onChange={handleJournalEntryChange}
+          mb={4}
+          bg={useColorModeValue("white", "gray.800")}
+          color={useColorModeValue("gray.700", "gray.300")}
+        />
+        <Button
+          colorScheme={useColorModeValue("blue", "teal")}
+          onClick={handleSubmit}
+        >
+          Save
         </Button>
       </Box>
     </Box>
