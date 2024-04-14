@@ -15,6 +15,7 @@ import {
   ModalOverlay,
   Text,
   Textarea,
+  Tooltip,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -128,11 +129,16 @@ const CreatePost = () => {
                 ref={imageRef}
                 onChange={handleImageChange}
               />
-              <BsFillImageFill
-                style={{ marginLeft: "5px", cursor: "pointer" }}
-                size={16}
-                onClick={() => imageRef.current.click()}
-              />
+              <Flex alignItems="center" cursor="pointer" onClick={() => imageRef.current.click()}>
+                <Tooltip label="Media" placement="top" hasArrow>
+                  <div>
+                    <BsFillImageFill
+                      style={{ marginLeft: "5px" }}
+                      size={16}
+                    />
+                  </div>
+                </Tooltip>
+              </Flex>
             </FormControl>
 
             {imgUrl && (

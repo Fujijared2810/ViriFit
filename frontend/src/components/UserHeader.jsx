@@ -118,16 +118,16 @@ const UserHeader = ({ user }) => {
       </Flex>
 
       <Flex w={"full"}>
-        <Flex
-          flex={1}
-          borderBottom={"1.5px solid white"}
-          justifyContent={"center"}
-          pb="3"
-          cursor={"pointer"}
-        >
-          <Text fontWeight={"bold"}> Threads</Text>
-        </Flex>
+      <Flex
+        flex={1}
+        borderBottom={useColorModeValue("1.5px solid black", "1.5px solid white")}
+        justifyContent={"center"}
+        pb="3"
+        cursor={"pointer"}
+      >
+        <Text fontWeight={"bold"}>Threads</Text>
       </Flex>
+    </Flex>
     </VStack>
   );
 };
