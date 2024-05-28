@@ -89,7 +89,7 @@ const UserHeader = ({ user }) => {
       )}
       {currentUser?._id !== user._id && (
         <Button size={"sm"} onClick={handleFollowUnFollow} isLoading={updating}>
-          {following ? "UnFolow" : "Follow"}
+          {following ? "UnFollow" : "Follow"}
         </Button>
       )}
       <Flex w={"full"} justifyContent={"space-between"}>
@@ -118,16 +118,19 @@ const UserHeader = ({ user }) => {
       </Flex>
 
       <Flex w={"full"}>
-      <Flex
-        flex={1}
-        borderBottom={useColorModeValue("1.5px solid black", "1.5px solid white")}
-        justifyContent={"center"}
-        pb="3"
-        cursor={"pointer"}
-      >
-        <Text fontWeight={"bold"}>Threads</Text>
+        <Flex
+          flex={1}
+          borderBottom={useColorModeValue(
+            "1.5px solid black",
+            "1.5px solid white"
+          )}
+          justifyContent={"center"}
+          pb="3"
+          cursor={"pointer"}
+        >
+          <Text fontWeight={"bold"}>Posts</Text>
+        </Flex>
       </Flex>
-    </Flex>
     </VStack>
   );
 };
