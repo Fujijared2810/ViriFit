@@ -89,7 +89,7 @@ const PostPage = () => {
           <Avatar
             src={user.profilePic}
             size={"md"}
-            name="Jared Mesa"
+            name={user.username}
             onClick={() => navigateToUserProfile(user.username)}
             cursor={"pointer"}
           />
