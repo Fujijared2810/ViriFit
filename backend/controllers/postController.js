@@ -6,7 +6,7 @@ import { v2 as cloudinary } from "cloudinary";
 const createPost = async (req, res) => {
   try {
     const { postedBy, text } = req.body;
-    let { img } = req.body;
+    let { img, video } = req.body;
 
     if (!postedBy || !text) {
       return res
@@ -31,11 +31,18 @@ const createPost = async (req, res) => {
     }
 
     if (img) {
-      const uploadedResponse = await cloudinary.uploader.upload(img);
-      img = uploadedResponse.secure_url;
+      const uploadedImageResponse = await cloudinary.uploader.upload(img);
+      img = uploadedImageResponse.secure_url;
     }
 
-    const newPost = new Post({ postedBy, text, img });
+    if (video) {
+      const uploadedVideoResponse = await cloudinary.uploader.upload(video, {
+        resource_type: "video",
+      });
+      video = uploadedVideoResponse.secure_url;
+    }
+
+    const newPost = new Post({ postedBy, text, img, video });
 
     await newPost.save();
     res.status(201).json(newPost);
