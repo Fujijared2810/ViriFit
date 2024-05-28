@@ -133,6 +133,18 @@ const PostPage = () => {
         </Box>
       )}
 
+      {currentPost.video && (
+        <Box
+          borderRadius={6}
+          overflow={"hidden"}
+          border={"1px solid"}
+          borderColor={"gray.light"}
+          mt={3}
+        >
+          <video src={currentPost.video} controls style={{ width: "100%" }} />
+        </Box>
+      )}
+
       <Flex gap={3} my={3}>
         <Actions post={currentPost} />
       </Flex>
@@ -143,7 +155,7 @@ const PostPage = () => {
         <Flex gap={2} alignItems={"center"}>
           <Text fontSize={"2xl"}>⭐️</Text>
           <Text color={"gray.light"}>
-            Did you liked this post? Give it a Support! :D
+            Did you like this post? Give it a Support! :D
           </Text>
         </Flex>
       </Flex>
