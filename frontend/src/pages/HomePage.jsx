@@ -5,6 +5,7 @@ import Post from "../components/Post";
 import { useRecoilState } from "recoil";
 import postsAtom from "../atoms/postsAtom";
 import SuggestedUsers from "../components/SuggestedUsers";
+import Checker from "../hooks/checker";
 
 const HomePage = () => {
   const [posts, setPost] = useRecoilState(postsAtom);
@@ -57,6 +58,7 @@ const HomePage = () => {
         }}
       >
         <SuggestedUsers />
+        <Checker />
       </Box>
     </Flex>
   );

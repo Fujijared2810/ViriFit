@@ -30,7 +30,7 @@ const Header = () => {
           to={"/auth"}
           onClick={() => setAuthScreen("login")}
         >
-          Login
+          {/* Login */}
         </Link>
       )}
 
@@ -67,7 +67,7 @@ const Header = () => {
           to={"/auth"}
           onClick={() => setAuthScreen("signup")}
         >
-          Sign Up
+          {/* Sign Up */}
         </Link>
       )}
     </Flex>
