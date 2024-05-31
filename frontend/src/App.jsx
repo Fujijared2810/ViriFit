@@ -12,6 +12,7 @@ import CreatePost from "./components/CreatePost";
 import ChatPage from "./pages/ChatPage";
 import SettingsPage from "./pages/SettingsPage";
 import JournalPage from "./pages/JournalPage";
+import OnboardingPage from "./pages/OnboardingPage";
 
 function App() {
   const user = useRecoilValue(userAtom);
@@ -70,6 +71,10 @@ function App() {
           <Route
             path="/journal"
             element={user ? <JournalPage /> : <Navigate to={"/auth"} />}
+          />
+          <Route
+            path="/onboarding"
+            element={user ? <OnboardingPage /> : <Navigate to={"/auth"} />}
           />
         </Routes>
       </Container>

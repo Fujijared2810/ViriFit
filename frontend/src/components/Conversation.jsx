@@ -7,7 +7,6 @@ import {
   Stack,
   Text,
   WrapItem,
-  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -22,11 +21,9 @@ const Conversations = ({ conversation, isOnline }) => {
   const [selectedConversation, setSelectedConversation] = useRecoilState(
     selectedConversationAtom
   );
-  const colorMode = useColorMode();
 
   const selectedBgColor = useColorModeValue("gray.200", "gray.600");
   // const selectedTextColor = useColorModeValue("gray.800", "white");
-  
 
   return (
     <Flex
@@ -47,11 +44,7 @@ const Conversations = ({ conversation, isOnline }) => {
           mock: conversation.mock,
         })
       }
-      bg={
-        selectedConversation?._id === conversation._id
-          ? selectedBgColor
-          : ""
-      }
+      bg={selectedConversation?._id === conversation._id ? selectedBgColor : ""}
       borderRadius={"md"}
     >
       <WrapItem>

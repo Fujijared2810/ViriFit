@@ -20,8 +20,10 @@ import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../atoms/authAtom";
 import useShowToast from "../hooks/useShowToast";
 import userAtom from "../atoms/userAtom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupCard() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,10 @@ export default function SignupCard() {
 
       localStorage.setItem("user-threads", JSON.stringify(data));
       setUser(data);
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/onboarding");
+      }, 1000); // 1-second delay
     } catch (error) {
       showToast("Error", error, "error");
     } finally {

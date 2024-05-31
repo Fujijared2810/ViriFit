@@ -150,7 +150,7 @@ const CreatePost = () => {
                 </Tooltip>
                 <Tooltip label="Video" placement="top" hasArrow>
                   <div onClick={() => videoRef.current.click()}>
-                    <FaVideo style={{ marginLeft: "5px" }} size={16} />
+                    <FaVideo style={{ marginLeft: "20px" }} size={16} />
                   </div>
                 </Tooltip>
               </Flex>

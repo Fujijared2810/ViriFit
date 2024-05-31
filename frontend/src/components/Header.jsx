@@ -12,7 +12,7 @@ import { MdOutlineSettings } from "react-icons/md";
 import { IoMdFitness } from "react-icons/io";
 
 const Header = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
   const user = useRecoilValue(userAtom);
   const logout = useLogout();
   const setAuthScreen = useSetRecoilState(authScreenAtom);
@@ -34,13 +34,14 @@ const Header = () => {
         </Link>
       )}
 
-      <Image
-        cursor={"pointer"}
-        alt="logo"
-        w="4rem"
-        src={colorMode === "dark" ? "/logo2.png" : "/logo2.png"}
-        onClick={toggleColorMode}
-      />
+      <Link as={RouterLink} to="/">
+        <Image
+          cursor={"pointer"}
+          alt="logo"
+          w="4rem"
+          src={colorMode === "dark" ? "/logo2.png" : "/logo2.png"}
+        />
+      </Link>
 
       {user && (
         <Flex alignItems={"center"} gap={4}>

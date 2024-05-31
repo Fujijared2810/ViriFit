@@ -1,8 +1,9 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Button, Stack, Text, useColorMode } from "@chakra-ui/react";
 import useShowToast from "../hooks/useShowToast";
 import useLogout from "../hooks/useLogout";
 
 const SettingsPage = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const showToast = useShowToast();
   const logout = useLogout();
   const freezeAccount = async () => {
@@ -39,6 +40,28 @@ const SettingsPage = () => {
       <Button size={"sm"} colorScheme="red" onClick={freezeAccount}>
         Freeze
       </Button>
+
+      <Text my={1} mt={10} fontWeight={"bold"}>
+        Dark/Light Mode
+      </Text>
+      <Stack direction="row" spacing={4}>
+        <Button
+          size={"sm"}
+          colorScheme="blue"
+          onClick={() => toggleColorMode("light")}
+          isDisabled={colorMode === "light"}
+        >
+          Light Mode
+        </Button>
+        <Button
+          size={"sm"}
+          colorScheme="gray"
+          onClick={() => toggleColorMode("dark")}
+          isDisabled={colorMode === "dark"}
+        >
+          Dark Mode
+        </Button>
+      </Stack>
     </>
   );
 };
