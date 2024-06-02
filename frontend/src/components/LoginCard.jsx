@@ -61,8 +61,9 @@ export default function LoginCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Login
+            Welcome Back!
           </Heading>
+          <Text fontSize={15}>Log in to your existing account.</Text>
         </Stack>
         <Box
           rounded={"lg"}

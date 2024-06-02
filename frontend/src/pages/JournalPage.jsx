@@ -1,41 +1,49 @@
 import { useState, useEffect } from "react";
 import {
   Box,
-  Flex,
   Heading,
-  Input,
-  Button,
-  Text,
-  Grid,
-  GridItem,
-  useColorModeValue,
-  List,
-  ListItem,
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
+  Flex,
+  Text,
+  Grid,
+  GridItem,
+  Input,
+  Button,
+  List,
+  ListItem,
+  InputGroup,
+  useColorModeValue,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import {
-  format,
   addDays,
   startOfWeek,
   endOfWeek,
   eachDayOfInterval,
+  format,
 } from "date-fns";
 
 const JournalPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [journalEntry, setJournalEntry] = useState("");
+  const [sets, setSets] = useState("");
+  const [reps, setReps] = useState("");
   const [savedEntries, setSavedEntries] = useState(() => {
     const entries = localStorage.getItem("savedEntries");
     return entries ? JSON.parse(entries) : {};
   });
 
   useEffect(() => {
-    localStorage.setItem("savedEntries", JSON.stringify(savedEntries));
+    try {
+      const savedEntriesJSON = JSON.stringify(savedEntries);
+      localStorage.setItem("savedEntries", savedEntriesJSON);
+    } catch (error) {
+      console.error("Failed to save entries to localStorage:", error);
+    }
   }, [savedEntries]);
 
   const handleDateChange = (day) => {
@@ -46,17 +54,32 @@ const JournalPage = () => {
     setJournalEntry(event.target.value);
   };
 
+  const handleSetsChange = (event) => {
+    setSets(event.target.value);
+  };
+
+  const handleRepsChange = (event) => {
+    setReps(event.target.value);
+  };
+
   const handleSubmit = () => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
     const formattedTime = format(new Date(), "h:mm a");
     setSavedEntries((prevEntries) => ({
       ...prevEntries,
-      [formattedDate]: {
-        entry: journalEntry,
-        time: formattedTime,
-      },
+      [formattedDate]: [
+        ...(prevEntries[formattedDate] || []),
+        {
+          entry: journalEntry,
+          sets: sets,
+          reps: reps,
+          time: formattedTime,
+        },
+      ],
     }));
     setJournalEntry("");
+    setSets("");
+    setReps("");
   };
 
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -75,11 +98,11 @@ const JournalPage = () => {
 
   return (
     <Box p={padding}>
-      <Heading mb={marginBottom}>Workout Log</Heading>
+      <Heading mb={marginBottom}>Your Workout Log</Heading>
       <Tabs isFitted variant="enclosed">
         <TabList mb="1em">
-          <Tab>Log Workout</Tab>
-          <Tab>View Workouts</Tab>
+          <Tab>Log Your Workouts</Tab>
+          <Tab>View All Your Workouts</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -139,13 +162,30 @@ const JournalPage = () => {
             </Grid>
             <Box mt={6}>
               <Input
-                placeholder="Enter your workout log entry"
+                placeholder="Your Workout, (Weights)"
                 value={journalEntry}
                 onChange={handleJournalEntryChange}
                 mb={4}
                 bg={useColorModeValue("white", "gray.800")}
                 color={useColorModeValue("gray.700", "gray.300")}
               />
+              <InputGroup size="md" gap={3} mb={4}>
+                <Input
+                  width="28rem"
+                  placeholder="Sets"
+                  value={sets}
+                  onChange={handleSetsChange}
+                  bg={useColorModeValue("white", "gray.800")}
+                  color={useColorModeValue("gray.700", "gray.300")}
+                />
+                <Input
+                  placeholder="Reps"
+                  value={reps}
+                  onChange={handleRepsChange}
+                  bg={useColorModeValue("white", "gray.800")}
+                  color={useColorModeValue("gray.700", "gray.300")}
+                />
+              </InputGroup>
               <Button
                 colorScheme={useColorModeValue("blue", "teal")}
                 onClick={handleSubmit}
@@ -158,14 +198,16 @@ const JournalPage = () => {
                     Saved Entries
                   </Heading>
                   <List spacing={2}>
-                    <ListItem>
-                      <Text fontWeight="bold">
-                        {savedEntries[format(selectedDate, "yyyy-MM-dd")].time}
-                      </Text>
-                      <Text>
-                        {savedEntries[format(selectedDate, "yyyy-MM-dd")].entry}
-                      </Text>
-                    </ListItem>
+                    {savedEntries[format(selectedDate, "yyyy-MM-dd")].map(
+                      (entry, index) => (
+                        <ListItem key={index}>
+                          <Text fontWeight="bold">{entry.time}</Text>
+                          <Text>Workout: {entry.entry}</Text>
+                          <Text>Sets: {entry.sets}</Text>
+                          <Text>Reps: {entry.reps}</Text>
+                        </ListItem>
+                      )
+                    )}
                   </List>
                 </Box>
               )}
@@ -179,8 +221,14 @@ const JournalPage = () => {
               {Object.keys(savedEntries).map((date) => (
                 <ListItem key={date}>
                   <Text fontWeight="bold">{date}</Text>
-                  <Text>{savedEntries[date].time}</Text>
-                  <Text>{savedEntries[date].entry}</Text>
+                  {savedEntries[date].map((entry, index) => (
+                    <Box key={index} ml={4} mb={2}>
+                      <Text fontWeight="bold">{entry.time}</Text>
+                      <Text>Workout: {entry.entry}</Text>
+                      <Text>Sets: {entry.sets}</Text>
+                      <Text>Reps: {entry.reps}</Text>
+                    </Box>
+                  ))}
                 </ListItem>
               ))}
             </List>

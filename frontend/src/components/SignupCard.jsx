@@ -71,8 +71,9 @@ export default function SignupCard() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Welcome to VIRIFIT!
           </Heading>
+          <Text fontSize={15}>Create your account.</Text>
         </Stack>
         <Box
           rounded={"lg"}
@@ -158,7 +159,7 @@ export default function SignupCard() {
               <Text align={"center"}>
                 Already a user?{" "}
                 <Link color={"blue.400"} onClick={() => setAuthScreen("login")}>
-                  Login
+                  Sign In
                 </Link>
               </Text>
             </Stack>

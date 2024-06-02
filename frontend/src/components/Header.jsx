@@ -21,7 +21,9 @@ const Header = () => {
     <Flex justifyContent={"space-between"} mt={6} mb={12}>
       {user && (
         <Link as={RouterLink} to="/">
-          <AiFillHome size={24} />
+          <Flex mt={2}>
+            <AiFillHome size={24} />
+          </Flex>
         </Link>
       )}
       {!user && (
@@ -38,8 +40,8 @@ const Header = () => {
         <Image
           cursor={"pointer"}
           alt="logo"
-          w="4rem"
-          src={colorMode === "dark" ? "/logo2.png" : "/logo2.png"}
+          w="50px"
+          src={colorMode === "dark" ? "/logo.svg" : "/logo.svg"}
         />
       </Link>
 
