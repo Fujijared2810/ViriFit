@@ -1,8 +1,26 @@
-# React + Vite
+# To install
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```bash
+cd frontend && npm i
+____________________
+cd backend && npm i
+```
 
-Currently, two official plugins are available:
+# To start a developer website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+cd frontend && npm run dev
+____________________
+cd backend && npm run dev
+```
+
+# IMPORTANT NEED THIS .ENV TO RUN THE WHOLE WEBSITE
+
+```bash
+PORT = 5001
+MONGO_URI =
+JWT_SECRET =jwtSecret
+CLOUDINARY_CLOUD_NAME= 
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_KEY_SECRET =
+```
